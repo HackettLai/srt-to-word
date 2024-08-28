@@ -3,6 +3,13 @@ const btn_convert = document.getElementById("btn_convert");
 const btn_download = document.getElementById("btn_download");
 const fileInput = document.getElementById("srtFile");
 
+// copyrightYear function to set the current year in the #thisYear element
+window.addEventListener("load", copyright, true);
+function copyright() {
+  const thisYear = new Date().getFullYear();
+  document.getElementById("thisYear").innerHTML = thisYear;
+}
+
 // Enable the convert button once a file is selected
 fileInput.addEventListener("change", function () {
   if (fileInput.files.length > 0) {
