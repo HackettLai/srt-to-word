@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Extractor</title>
+    <!-- meta tags -->
+    <meta property="og:title" content="SRT to DOCX Converter" />
+    <meta name="og:image" content="assets/og-image.jpeg" />
+    <meta property="og:image" content="assets/og-image.jpeg" />
+    <meta name="description"
+        content="This application streamlines the task of converting subtitle files to a format that's compatible with Word processors, making it perfect for educators, content creators, and anyone needing to integrate subtitle text into documents. Try it now and see how simple converting SRT files to DOCX can be!" />
+    <meta name="og:description"
+        content="This application streamlines the task of converting subtitle files to a format that's compatible with Word processors, making it perfect for educators, content creators, and anyone needing to integrate subtitle text into documents. Try it now and see how simple converting SRT files to DOCX can be!" />
+    <meta property="og:description"
+        content="This application streamlines the task of converting subtitle files to a format that's compatible with Word processors, making it perfect for educators, content creators, and anyone needing to integrate subtitle text into documents. Try it now and see how simple converting SRT files to DOCX can be!" />
+    <meta name="url" content="https://srt.hackettlai.com" />
+    <meta name="og:url" content="https://srt.hackettlai.com" />
+    <meta property="og:url" content="https://srt.hackettlai.com" />
+    <meta name="keywords"
+        content="SRT to DOCX converter, subtitle converter, SRT to Word, DOCX converter, subtitle to document, convert subtitles to Word, SRT file conversion, subtitle text extractor, caption to DOCX, convert SRT to document, subtitle processing, text conversion tool">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1f1f1f">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <h1>SRT to DOCX Converter</h1>
+    <p>Welcome to the SRT to DOCX Converter page, a user-friendly tool designed to transform your subtitle files into
+        easily shareable Word documents. This versatile application allows you to upload SRT files, view the converted
+        text directly within the webpage, and download a well-formatted DOCX file at your convenience.</p>
+    <div class="flex-r full">
+        <input type="file" id="srtFile" accept=".srt" />
+        <button onclick="convertSrtToDocx()" disabled id="btn_convert">Convert</button>
+    </div>
+    <div id="result_div"></div>
+    <button onclick="downloadDocx() " disabled id="btn_download">Download</button>
+    <footer>
+        <p id="version">Built Version 1.0.1</p>
+        <img class="footer-image" src="assets/footer-logo.png" />
+        <p><a href="https://tool.hackettlai.com" target="blank">Hackett.Lai</a> @ <span id="thisYear"
+                class="footer"></span>
+        </p>
+
+    </footer>
+    <!-- Changes Log -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2>Changes Log</h2>
+            <table class="modal-table">
+                <tr>
+                    <td>v1.0.1</td>
+                    <td>
+                        <p>2024/08/26</p>
+                        <ol>
+                            <li><strong>Simple File Upload:</strong> Easily upload your `.srt` subtitle files using the
+                                integrated file input option.</li>
+                            <li><strong>Instant Text Display:</strong> Once converted, your subtitle text is displayed
+                                instantly on the page, formatted for easy viewing and ready for review.</li>
+                            <li><strong>Flexible Download Option:</strong> Choose to download the converted document
+                                when you're ready—no need for immediate downloads after conversion.</li>
+                            <li><strong>Automatic Sentence Separation:</strong> The tool intelligently processes your
+                                subtitles, breaking them down into paragraphs based on sentence-ending punctuation,
+                                including Western and Chinese marks like ".", "!", "?", "。", "！", and "？".</li>
+                            <li><strong>Readability Enhancements:</strong> For enhanced readability, the converted text
+                                includes sensible line breaks and section spacing, making your subtitles easier to
+                                navigate.</li>
+                            <li><strong>Intuitive Interface:</strong> The layout and functionality are designed to
+                                provide an effortless user experience, ensuring even those unfamiliar with DOCX
+                                conversions can navigate the process with ease.</li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- scripts -->
+    <!-- Include the docx.js library from a CDN -->
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src='function.js'></script>
+    <script type="text/javascript" src="./changelog.js"></script>
+</body>
+
+</html>
