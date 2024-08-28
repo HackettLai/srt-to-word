@@ -28,8 +28,8 @@ function convertSrtToDocx() {
   const reader = new FileReader();
   reader.onload = function (event) {
     const srtText = event.target.result;
-    const sentences = parseSrt(srtText);
-    displayResult(sentences);
+    const result = parseSrt(srtText);
+    displayResult(result);
   };
   reader.readAsText(file);
 
@@ -37,9 +37,9 @@ function convertSrtToDocx() {
   btn_download.disabled = false;
 }
 
-// Parses the SRT text into an array of sentences
+// Parses the SRT text into an array of sentences and counts the dialogues
 function parseSrt(srtContent) {
-  // Split the SRT content into lines
+  // Split the SRT content by lines
   const lines = srtContent.split("\n");
 
   // Initialize an empty array to store the trimmed dialogue
@@ -50,7 +50,6 @@ function parseSrt(srtContent) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
-    // console.log("line: " + line);
 
     // Skip the line number and timestamp lines
     if (
@@ -62,66 +61,46 @@ function parseSrt(srtContent) {
     ) {
       // If we have accumulated dialogue, push it to the trimmedDialogue array
       if (currentDialogue.length > 0) {
-        let dialogue = currentDialogue.join(" ");
-
-        // Replace punctuation, handling "..." specifically
-        let result = dialogue
-          .replace(/(\.\.\.)(?=\s)/g, "$1\n") // Add a newline after "..." if followed by space
-          .replace(/(\.\.\.)(?=\s)/g, "$1\n") // Add a newline after "..." if followed by space
-          .replace(/([.?!。？！！])(?=\s)/g, "$1\n") // Add newline for other punctuation followed by space
-          .replace(/([。？！！])(?=[^\s])/g, "$1\n"); // Add newline for other punctuation not followed by space
-
-        trimmedDialogue.push(result + "\n");
-
-        currentDialogue = []; // Reset current dialogue
+        trimmedDialogue.push(currentDialogue.join("\n"));
+        currentDialogue = []; // Reset currentDialogue for the next dialogue
       }
-      // If the line is an empty string, push a newline character
-      if (line === "") {
-        trimmedDialogue.push("\n");
-      }
-      continue;
+      continue; // Skip to the next iteration
     }
 
-    // Accumulate the dialogue lines
+    // If the line is part of the dialogue, add it to the currentDialogue
     currentDialogue.push(line);
   }
 
-  // Push the last accumulated dialogue if any
+  // After the loop, check if there's any remaining dialogue to push
   if (currentDialogue.length > 0) {
-    let dialogue = currentDialogue.join(" ");
-
-    // Replace punctuation, handling "..." specifically
-    let result = dialogue
-    .replace(/(\.\.\.)(?=\s)/g, "$1\n") // Add a newline after "..." if followed by space
-    .replace(/(\.\.\.)(?=\s)/g, "$1\n") // Add a newline after "..." if followed by space
-    .replace(/([.?!。？！！])(?=\s)/g, "$1\n") // Add newline for other punctuation followed by space
-    .replace(/([。？！！])(?=[^\s])/g, "$1\n"); // Add newline for other punctuation not followed by space
-
-    trimmedDialogue.push(result + "\n");
+    trimmedDialogue.push(currentDialogue.join("\n"));
   }
 
-  // Add line breaks at punctuation marks and an empty line between each section
-  const processedDialogue = trimmedDialogue.map((dialogue) => {
-    // Split by punctuation marks and ensure correct spacing
-    // console.log("dialogue: " + dialogue);
-    return dialogue;
-  });
+  // Join all dialogues with an empty line between each
+  const parsedSentences = trimmedDialogue.join("\n\n\n");
+  const dialogueCount = trimmedDialogue.length;
 
-  // Ensure an empty line between each section
-  const finalDialogue = processedDialogue.join("").split("\n\n").join("\n\n\n");
-
-  // Return the array of processed dialogues
-  return finalDialogue;
+  return { parsedSentences, dialogueCount };
 }
 
 // Displays the parsed sentences in the result div
-function displayResult(sentences) {
+function displayResult(result) {
   const resultDiv = document.getElementById("result_div");
   resultDiv.innerHTML = ""; // Clear previous results
 
-  // Ensure sentences is a string
-  if (typeof sentences === "string") {
-    sentences.split("\n\n").forEach((sentence) => {
+  // Display the count of dialogues
+  const countParagraph = document.createElement("p");
+  countParagraph.textContent = `*** Total Dialogues: ${result.dialogueCount} ***`;
+  resultDiv.appendChild(countParagraph);
+
+  // Add a space line
+  const spaceLine = document.createElement("p");
+  spaceLine.innerHTML = "<br>";
+  resultDiv.appendChild(spaceLine);
+
+  // Ensure parsedSentences is a string
+  if (typeof result.parsedSentences === "string") {
+    result.parsedSentences.split("\n\n").forEach((sentence) => {
       const p = document.createElement("p");
       // Replace newline characters with <br> tags
       p.innerHTML = sentence.replace(/\n/g, "<br>");
@@ -132,11 +111,12 @@ function displayResult(sentences) {
       resultDiv.appendChild(p);
     });
   } else {
-    console.error("Expected a string but got:", sentences);
+    console.error("Expected a string but got:", result.parsedSentences);
   }
 
   generateDocxFile(); // Prepare the docx file for download
 }
+
 
 // Generates a DOCX file from the parsed sentences
 function generateDocxFile() {
