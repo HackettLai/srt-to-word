@@ -1,88 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SRT Extractor</title>
-    <!-- meta tags -->
-    <meta property="og:title" content="SRT to DOCX Converter" />
-    <meta name="og:image" content="assets/og-image.jpeg" />
-    <meta property="og:image" content="assets/og-image.jpeg" />
-    <meta name="description" content="Easily manage your subtitle files with our Subtitle Converter Tool. Upload .srt files, instantly view dialogues, auto-remove timestamps, get a summary of dialogue counts, enhance readability, and save your work as a .docx Word document. Simplify subtitle editing today!" />
-    <meta name="og:description" content="Easily manage your subtitle files with our Subtitle Converter Tool. Upload .srt files, instantly view dialogues, auto-remove timestamps, get a summary of dialogue counts, enhance readability, and save your work as a .docx Word document. Simplify subtitle editing today!" />
-    <meta property="og:description" content="Easily manage your subtitle files with our Subtitle Converter Tool. Upload .srt files, instantly view dialogues, auto-remove timestamps, get a summary of dialogue counts, enhance readability, and save your work as a .docx Word document. Simplify subtitle editing today!" />
-    <meta name="url" content="https://srt.hackettlai.com" />
-    <meta name="og:url" content="https://srt.hackettlai.com" />
-    <meta property="og:url" content="https://srt.hackettlai.com" />
-    <meta name="keywords" content="SRT to DOCX converter, subtitle converter, SRT to Word, DOCX converter, subtitle to document, convert subtitles to Word, SRT file conversion, subtitle text extractor, caption to DOCX, convert SRT to document, subtitle processing, text conversion tool" />
-    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
-    <!-- favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1f1f1f" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="theme-color" content="#ffffff" />
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <h1>SRT to DOCX Converter</h1>
-    <p>Welcome to the SRT to DOCX Converter, your easy-to-use tool for transforming subtitle files. Just upload your .srt files, we'll strip out the timestamps for you and give you a neat summary of the dialogues, all while keeping the original line breaks and punctuation intact. Once you're happy, save everything as a handy .docx Word document. Simplifying subtitles has never been easier!</p>
-    <div class="flex-r full">
-      <input type="file" id="srtFile" accept=".srt" />
-      <button onclick="convertSrtToDocx()" disabled id="btn_convert">Convert</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRT Extractor</title>
+  <!-- meta tags -->
+  <meta property="og:title" content="SRT to DOCX Converter" />
+  <meta name="og:image" content="assets/og-image.jpeg" />
+  <meta property="og:image" content="assets/og-image.jpeg" />
+  <meta name="description"
+    content="Transform your subtitles effortlessly with our SRT to DOCX Converter. Simply upload your .srt files, choose your preferred conversion option, and save the results as a convenient .docx document. Subtitles made simple!" />
+  <meta name="og:description"
+    content="Transform your subtitles effortlessly with our SRT to DOCX Converter. Simply upload your .srt files, choose your preferred conversion option, and save the results as a convenient .docx document. Subtitles made simple!" />
+  <meta property="og:description"
+    content="Transform your subtitles effortlessly with our SRT to DOCX Converter. Simply upload your .srt files, choose your preferred conversion option, and save the results as a convenient .docx document. Subtitles made simple!" />
+  <meta name="url" content="https://srt.hackettlai.com" />
+  <meta name="og:url" content="https://srt.hackettlai.com" />
+  <meta property="og:url" content="https://srt.hackettlai.com" />
+  <meta name="keywords"
+    content="SRT to DOCX converter, subtitle converter, SRT to Word, DOCX converter, subtitle to document, convert subtitles to Word, SRT file conversion, subtitle text extractor, caption to DOCX, convert SRT to document, subtitle processing, text conversion tool" />
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+  <!-- favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1f1f1f" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="theme-color" content="#ffffff" />
+  <!-- stylesheets -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>SRT to DOCX Converter</h1>
+  <p class="full green">Welcome to the SRT to DOCX Converter, your easy-to-use tool for transforming subtitle files.</p>
+  <ol class="full">
+    <li>Just upload your .srt files.</li>
+    <li>Select the desired conversion option.</li>
+    <li>Once you're happy, save it as a handy .docx Word document. Done!</li>
+  </ol>
+  <input type="file" id="srtFile" accept=".srt" />
+  <div class="flex-r full">
+    <button disabled id="btn_convert_1">Original Breaks</button>
+    <button disabled id="btn_convert_2">Break on Punct</button>
+    <button disabled id="btn_convert_3">In Paragraphs</button>
+  </div>
+  <div id="result_div"></div>
+  <button onclick="downloadDocx() " disabled id="btn_download">Download</button>
+  <footer>
+    <p id="version">Built Version 2.1.0</p>
+    <img class="footer-image" src="assets/footer-logo.png" />
+    <p>
+      <a href="https://tool.hackettlai.com" target="blank">Hackett.Lai</a>
+      @
+      <span id="thisYear" class="footer"></span>
+    </p>
+  </footer>
+  <!-- Changes Log -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Changes Log</h2>
+      <table class="modal-table">
+        <tr>
+          <td>v2.1.0</td>
+          <td>
+            <p>2024/08/30</p>
+            <ol>
+              <li>Introduced a new feature: <strong>Conversion Options</strong>!</li>
+              <li><strong>Original Breaks:</strong> Preserves original line breaks only.</li>
+              <li><strong>Break on Punct:</strong> Strips out original line breaks and add line breaks after punctuation
+                marks for each dialogue.</li>
+              <li><strong>In Paragraphs:</strong> Merges all dialogue and group them into paragraphs by adding line
+                breaks after punctuation marks.</li>
+              <li>Automatically scroll to the first line of the converted text after each conversion.</li>
+              <li>New color theme with animation effects.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>v1.0.2</td>
+          <td>
+            <p>2024/08/28</p>
+            <ol>
+              <li><strong>Automatic Sentence Separation:</strong> Removed this feature as it caused unstable result
+                across different situations.</li>
+              <li><strong>Dialogues Summary:</strong> Added a summary of the dialogue count.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>v1.0.1</td>
+          <td>
+            <p>2024/08/26</p>
+            <ol>
+              <li><strong>Simple File Upload:</strong> Easily upload your `.srt` subtitle files using the integrated
+                file input option.</li>
+              <li><strong>Instant Text Display:</strong> Once converted, your subtitle text is displayed instantly on
+                the page, formatted for easy viewing and ready for review.</li>
+              <li><strong>Flexible Download Option:</strong> Choose to download the converted document when you're
+                ready—no need for immediate downloads after conversion.</li>
+              <li><strong>Automatic Sentence Separation:</strong> The tool intelligently processes your subtitles,
+                breaking them down into paragraphs based on sentence-ending punctuation, including Western and Chinese
+                marks like ".", "!", "?", "。", "！", and "？".</li>
+              <li><strong>Readability Enhancements:</strong> For enhanced readability, the converted text includes
+                sensible line breaks and section spacing, making your subtitles easier to navigate.</li>
+              <li><strong>Intuitive Interface:</strong> The layout and functionality are designed to provide an
+                effortless user experience, ensuring even those unfamiliar with DOCX conversions can navigate the
+                process with ease.</li>
+            </ol>
+          </td>
+        </tr>
+      </table>
     </div>
-    <div id="result_div"></div>
-    <button onclick="downloadDocx() " disabled id="btn_download">Download</button>
-    <footer>
-      <p id="version">Built Version 1.0.2</p>
-      <img class="footer-image" src="assets/footer-logo.png" />
-      <p>
-        <a href="https://tool.hackettlai.com" target="blank">Hackett.Lai</a>
-        @
-        <span id="thisYear" class="footer"></span>
-      </p>
-    </footer>
-    <!-- Changes Log -->
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span id="closeModal" class="close">&times;</span>
-        <h2>Changes Log</h2>
-        <table class="modal-table">
-          <tr>
-            <td>v1.0.2</td>
-            <td>
-              <p>2024/08/28</p>
-              <ol>
-                <li><strong>Automatic Sentence Separation:</strong> Removed this feature as it caused unstable result across different situations.</li>
-                <li><strong>Dialogues Summary:</strong> Added a summary of the dialogue count.</li>
-              </ol>
-            </td>
-          </tr>
-          <tr>
-            <td>v1.0.1</td>
-            <td>
-              <p>2024/08/26</p>
-              <ol>
-                <li><strong>Simple File Upload:</strong> Easily upload your `.srt` subtitle files using the integrated file input option.</li>
-                <li><strong>Instant Text Display:</strong> Once converted, your subtitle text is displayed instantly on the page, formatted for easy viewing and ready for review.</li>
-                <li><strong>Flexible Download Option:</strong> Choose to download the converted document when you're ready—no need for immediate downloads after conversion.</li>
-                <li><strong>Automatic Sentence Separation:</strong> The tool intelligently processes your subtitles, breaking them down into paragraphs based on sentence-ending punctuation, including Western and Chinese marks like ".", "!", "?", "。", "！", and "？".</li>
-                <li><strong>Readability Enhancements:</strong> For enhanced readability, the converted text includes sensible line breaks and section spacing, making your subtitles easier to navigate.</li>
-                <li><strong>Intuitive Interface:</strong> The layout and functionality are designed to provide an effortless user experience, ensuring even those unfamiliar with DOCX conversions can navigate the process with ease.</li>
-              </ol>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <!-- scripts -->
-    <!-- Include the docx.js library from a CDN -->
-    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
-    <script src="function.js"></script>
-    <script type="text/javascript" src="./changelog.js"></script>
-  </body>
+  </div>
+  <!-- scripts -->
+  <!-- Include the docx.js library from a CDN -->
+  <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+  <script src="function.js"></script>
+  <script type="text/javascript" src="./changelog.js"></script>
+</body>
+
 </html>
