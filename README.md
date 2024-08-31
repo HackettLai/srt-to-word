@@ -17,5 +17,5 @@ https://srt.hackettlai.com
 - **Scroll to First Line:** Automatically scroll to the first line of the converted text after each conversion.
 - **Dialogues Summary:** Added a summary of the dialogue count at the beginning.
 - **Punctuation Breaks:** Uses a regular expression `/("|\.{3}|\.|!|\?)[^\S\r\n]|(……|⋯⋯|。|！|？)(?![\n”"」』…⋯。！？]|$)/g` to add line breaks after punctuation marks automatically.
-  > Note: Punctuation Breaks only work for <strong>Break on Punct</strong>, <strong>In Paragraphs</strong> only.
+  > Note: This is an optional feature and can be turned off by the checkbox.
 - **Save as Word Document:** Able to download the converted document in the `.docx` format for easy sharing and editing.

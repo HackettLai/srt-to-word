@@ -5,6 +5,8 @@ const btn_convert_3 = document.getElementById('btn_convert_3');
 const btn_download = document.getElementById('btn_download');
 const fileInput = document.getElementById('srtFile');
 const result_div = document.getElementById('result_div');
+const checkbox1 = document.getElementById('checkbox1');
+let checkboxValue = false;
 // copyrightYear function to set the current year in the #thisYear element
 window.addEventListener('load', copyright, true);
 function copyright() {
@@ -17,12 +19,14 @@ fileInput.addEventListener('change', function () {
     btn_convert_1.disabled = false;
     btn_convert_2.disabled = false;
     btn_convert_3.disabled = false;
+    checkbox1.disabled = false;
     const resultDiv = document.getElementById('result_div');
     resultDiv.innerHTML = ''; // Clear any previous content
   } else {
     btn_convert_1.disabled = true;
     btn_convert_2.disabled = true;
     btn_convert_3.disabled = true;
+    checkbox1.disabled = true;
   }
 });
 // Start conversion process when the button is clicked
@@ -35,6 +39,23 @@ btn_convert_2.addEventListener('click', () => {
 btn_convert_3.addEventListener('click', () => {
   convertSrtToDocx(3);
 });
+checkbox1.addEventListener('click', () => {
+  const isValid = validateCheckbox();
+  console.log(isValid);
+  btn_convert_1.disabled = false;
+  btn_convert_2.disabled = false;
+  btn_convert_3.disabled = false;
+});
+
+// Check if the checkbox is checked
+function validateCheckbox() {
+  if (checkbox1.checked) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // Converts an uploaded SRT file to DOCX format
 function convertSrtToDocx(convertMode) {
   result_div.classList.add('glow'); // Add glow effect to the result div
@@ -103,8 +124,14 @@ function parseSrtM1(srtContent) {
   if (currentDialogue.length > 0) {
     trimmedDialogue.push(currentDialogue.join('\n'));
   }
-  // Join all dialogues with an empty line between each
-  const parsedSentences = trimmedDialogue.join('\n\n\n');
+  let parsedSentences;
+  // Check do we need line breaks after punctuation marks
+  if (checkbox1.checked) {
+    // Join all dialogues with an empty line between each
+    parsedSentences = trimmedDialogue.join('\n\n\n');
+  } else {
+    parsedSentences = trimmedDialogue.join('\n');
+  }
   const dialogueCount = trimmedDialogue.length;
   return { parsedSentences, dialogueCount };
 }
@@ -138,8 +165,14 @@ function parseSrtM2(srtContent) {
     joinedDialogue = joinedDialogue.replace(/("|\.{3}|\.|!|\?)[^\S\r\n]|(……|⋯⋯|。|！|？)(?![\n”"」』…⋯。！？]|$)/g, '$1$2\n'); // Add line breaks
     trimmedDialogue.push(joinedDialogue);
   }
-  // Join all dialogues with an empty line between each
-  const parsedSentences = trimmedDialogue.join('\n\n\n');
+  let parsedSentences;
+  // Check do we need line breaks after punctuation marks
+  if (checkbox1.checked) {
+    // Join all dialogues with an empty line between each
+    parsedSentences = trimmedDialogue.join('\n\n\n');
+  } else {
+    parsedSentences = trimmedDialogue.join('\n');
+  }
   const dialogueCount = trimmedDialogue.length;
   return { parsedSentences, dialogueCount };
 }
@@ -171,8 +204,13 @@ function parseSrtM3(srtContent) {
   }
   // Join all dialogues with space between each
   let parsedSentences = trimmedDialogue.join(' ');
-  // Use the regular expression to insert line breaks
-  parsedSentences = parsedSentences.replace(/("|\.{3}|\.|!|\?)[^\S\r\n]|(……|⋯⋯|。|！|？)(?![\n”"」』…⋯。！？]|$)/g, '$1$2\n\n\n');
+  // Check do we need line breaks after punctuation marks
+  if (checkbox1.checked) {
+    // Use the regular expression to insert line breaks
+    parsedSentences = parsedSentences.replace(/("|\.{3}|\.|!|\?)[^\S\r\n]|(……|⋯⋯|。|！|？)(?![\n”"」』…⋯。！？]|$)/g, '$1$2\n\n\n');
+  } else {
+    parsedSentences = parsedSentences.replace(/("|\.{3}|\.|!|\?)[^\S\r\n]|(……|⋯⋯|。|！|？)(?![\n”"」』…⋯。！？]|$)/g, '$1$2\n');
+  }
   const dialogueCount = trimmedDialogue.length;
   return { parsedSentences, dialogueCount };
 }
@@ -246,5 +284,6 @@ function downloadDocx() {
   btn_convert_2.disabled = true;
   btn_convert_3.disabled = true;
   btn_download.disabled = true;
+  checkbox1.disabled = true;
   docBlob = null;
 }

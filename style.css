@@ -152,6 +152,12 @@ input::file-selector-button:hover {
   box-shadow: inset 0 0px 3px 2px var(--green);
   text-shadow: 0 0px 2px 3px var(--btn_shadow_hover);
 }
+input[type="checkbox"] {
+  accent-color: var(--green);
+  color: var(--mainTxt);
+  cursor: pointer;
+}
+
 
 button {
   outline: none;
@@ -236,7 +242,7 @@ footer a {
   border-collapse: collapse;
 }
 .modal-content {
-  width: 500px;
+  min-width: 500px;
   max-width: 70vw;
   margin: 15% auto;
   padding: 20px;
@@ -279,6 +285,6 @@ footer a {
   text-decoration: none;
 }
 
-strong {
+strong,b {
   color: var(--green);
 }
